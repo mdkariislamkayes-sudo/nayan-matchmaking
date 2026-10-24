@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nayan Matchmaking</title>
+    <style>
+        body {
+            background-color: #FFF0F5; 
+            font-family: Arial, sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* ভাষা পরিবর্তনের বাটন স্টাইল */
+        .lang-switch-container {
+            text-align: right;
+            max-width: 1200px;
+            margin: 0 auto 15px auto;
+        }
+
+        .lang-btn {
+            background-color: #D4AF37;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            background-color: #C59B27;
+        }
+
+        h1 {
+            text-align: center;
+            color: #8B008B; 
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hadith-sidebar {
+            width: 22%;
+            background-color: #ffffff;
+            border: 4px double #D4AF37; 
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            height: fit-content;
+            box-sizing: border-box;
+        }
+
+        .hadith-sidebar h3 {
+            color: #D4AF37; 
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .arabic-text {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #2c3e50;
+            text-align: right;
+            direction: rtl;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            width: 50%;
+            background-color: #ffffff;
+            padding: 30px;
+            border: 4px double #D4AF37; 
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #c71585;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ffccd5;
+            border-radius: 6px;
+            box-sizing: border-box;
+            background-color: #fffafb;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #D4AF37; 
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #C59B27; 
+        }
+
+        /* মোবাইল বা ছোট স্ক্রিনের জন্য রেসপনসিভ ডিজাইন */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                flex-direction: column; /* ফোন স্ক্রিনে কলামগুলো নিচে নিচে চলে আসবে */
+                gap: 15px;
+            }
+            .hadith-sidebar, .form-container {
+                width: 100%; /* প্রতিটি সেকশন পুরো স্ক্রিন জুড়ে থাকবে */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ভাষা পরিবর্তনের বাটন (ডিফল্টভাবে English থাকবে) -->
+    <div class="lang-switch-container">
+        <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">বাংলা</button>
+    </div>
+
+    <h1 data-en="Nayan Matchmaking 🤵👰" data-bn="নয়ন ম্যাচমেকিং 🤵👰">Nayan Matchmaking 🤵👰</h1>
+
+    <div class="container">
+        
+        <!-- বাম পাশের হাদিস -->
+        <div class="hadith-sidebar">
+            <h3 data-en="Hadith on Marriage" data-bn="বিয়ে সম্পর্কিত হাদিস">Hadith on Marriage</h3>
+            <p class="arabic-text">النِّكَاحُ مِنْ سُنَّتِي فَمَنْ لَمْ يَعْمَلْ بِسُنَّتِي فَلَيْسَ مِنِّي</p>
+            <p><strong data-en="English/Arabic Context:" data-bn="বাংলা:">Bangla:</strong> <span data-en='"Marriage is my tradition. Whoever does not act according to my tradition is not from me." (Ibn Majah)' data-bn='"বিয়ে আমার সুন্নত। অতএব যে আমার সুন্নত অনুযায়ী আমল করে না, সে আমার দলভুক্ত নয়।" (ইবনে মাজাহ)'>"Marriage is my tradition. Whoever does not act according to my tradition is not from me." (Ibn Majah)</span></p>
+        </div>
+
+        <!-- মাঝখানের মূল বায়োডাটা ফর্ম -->
+        <div class="form-container">
+            <h2 data-en="Candidate Biodata Form" data-bn="পাত্র/পাত্রীর বায়োডাটা ফর্ম">Candidate Biodata Form</h2>
+            
+            <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+                
+                <input type="hidden" name="access_key" value="1375defc-00a8-4fe8-b4f9-93cc27aa918f">
+                
+                <!-- ১. ব্যক্তিগত তথ্য -->
+                <h3 data-en="Personal Information" data-bn="ব্যক্তিগত তথ্য">Personal Information</h3>
+                
+                <label for="name" data-en="Full Name:" data-bn="নাম:">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="profession" data-en="Profession:" data-bn="পেশা:">Profession:</label>
+                <input type="text" id="profession" name="profession" required>
+
+                <label for="income" data-en="Monthly Income (BDT):" data-bn="মাসিক আয় (টাকা):">Monthly Income (BDT):</label>
+                <input type="number" id="income" name="income" min="0">
+
+                <label for="education" data-en="Educational Qualification:" data-bn="শিক্ষাগত যোগ্যতা:">Educational Qualification:</label>
+                <input type="text" id="education" name="education" required>
+
+                <label for="religion" data-en="Religion:" data-bn="ধর্ম:">Religion:</label>
+                <input type="text" id="religion" name="religion" required>
+
+                <!-- ২. ঠিকানা ও পারিবারিক তথ্য -->
+                <h3 data-en="Family & Contact Information" data-bn="পারিবারিক ও যোগাযোগের তথ্য">Family & Contact Information</h3>
+                
+                <label for="father_name" data-en="Father's Name:" data-bn="পিতার নাম:">Father's Name:</label>
+                <input type="text" id="father_name" name="father_name" required>
+
+                <label for="brothers" data-en="Number of Brothers:" data-bn="ভাইয়ের সংখ্যা:">Number of Brothers:</label>
+                <input type="number" id="brothers" name="brothers" min="0" required>
+
+                <label for="married_brothers" data-en="How many brothers are married?:" data-bn="কতজন ভাই বিবাহিত?:">How many brothers are married?:</label>
+                <input type="number" id="married_brothers" name="married_brothers" min="0" required>
+
+                <label for="sisters" data-en="Number of Sisters:" data-bn="বোনের সংখ্যা:">Number of Sisters:</label>
+                <input type="number" id="sisters" name="sisters" min="0" required>
+
+                <label for="married_sisters" data-en="How many sisters are married?:" data-bn="কতজন বোন বিবাহিত?:">How many sisters are married?:</label>
+                <input type="number" id="married_sisters" name="married_sisters" min="0" required>
+
+                <label for="sibling_position" data-en="Position among siblings (e.g., Eldest/Youngest):" data-bn="ভাই-বোনদের মধ্যে অবস্থান (যেমন: বড়/ছোট):">Position among siblings (e.g., Eldest/Youngest):</label>
+                <input type="text" id="sibling_position" name="sibling_position" required>
+
+                <label for="present_address" data-en="Present Address:" data-bn="বর্তমান ঠিকানা:">Present Address:</label>
+                <textarea id="present_address" name="present_address" rows="3" required></textarea>
+
+                <label for="permanent_address" data-en="Permanent Address:" data-bn="স্থায়ী ঠিকানা:">Permanent Address:</label>
+                <textarea id="permanent_address" name="permanent_address" rows="3" required></textarea>
+
+                <!-- ৩. অন্যান্য তথ্য -->
+                <h3 data-en="Other Information" data-bn="অন্যান্য তথ্য">Other Information</h3>
+                
+                <p data-en="Previous Marital History?" data-bn="আগে বিবাহ করেছিলেন কি?">Previous Marital History?</p>
+                <input type="radio" id="yes" name="married" value="yes">
+                <label for="yes" data-en="Yes" data-bn="হ্যাঁ">Yes</label>
+                <input type="radio" id="no" name="married" value="no" checked>
+                <label for="no" data-en="No" data-bn="না">No</label>
+                <br><br>
+
+                <label for="reason" data-en="If previously married, reason for divorce (Optional):" data-bn="বিবাহিত হয়ে থাকলে, তালাকের কারণ (ঐচ্ছিক):">If previously married, reason for divorce (Optional):</label>
+                <textarea id="reason" name="reason" rows="3"></textarea>
+
+                <label for="bad_habits" data-en="Any bad habits? (e.g., Smoking - mention if any):" data-bn="আপনার কোনো খারাপ অভ্যাস আছে কি? (যেমন: ধূমপান ইত্যাদি - থাকলে উল্লেখ করুন):">Any bad habits? (e.g., Smoking - mention if any):</label>
+                <textarea id="bad_habits" name="bad_habits" rows="2" placeholder="If none, type 'None'"></textarea>
+
+                <label for="life_perspective" data-en="Your perspective on life and how you want to lead it:" data-bn="জীবনের প্রতি আপনার দৃষ্টিভঙ্গি কেমন এবং জীবনকে কীভাবে পরিচালনা করতে চান?:">Your perspective on life and how you want to lead it:</label>
+                <textarea id="life_perspective" name="life_perspective" rows="5" required></textarea>
+
+                <button type="submit" data-en="Submit Biodata" data-bn="বায়োডাটা জমা দিন">Submit Biodata</button>
+            </form>
+        </div>
+
+        <!-- ডান পাশের হাদিস -->
+        <div class="hadith-sidebar">
+            <h3 data-en="Importance of Family Life" data-bn="পারিবারিক জীবনের গুরুত্ব">Importance of Family Life</h3>
+            <p class="arabic-text">إِذَا تَزَوَّجَ الْعَبْدُ فَقَدِ اسْتَكْمَلَ نِصْفَ الدِّينِ</p>
+            <p><strong data-en="English/Arabic Context:" data-bn="বাংলা:">Bangla:</strong> <span data-en='"When a servant marries, he has completed half of his religion." (Bayhaqi)' data-bn='"বান্দা যখন বিয়ে করে, তখন সে তার অর্ধেক দ্বীন পূর্ণ করে।" (বায়হাকী)'>"When a servant marries, he has completed half of his religion." (Bayhaqi)</span></p>
+        </div>
+
+    </div>
+
+    <!-- ভাষা পরিবর্তন করার জাভাস্ক্রিপ্ট কোড -->
+    <script>
+        let currentLang = 'en'; 
+
+        function toggleLanguage() {
+            const elements = document.querySelectorAll('[data-en]');
+            const btn = document.getElementById('langToggleBtn');
+
+            if (currentLang === 'en') {
+                currentLang = 'bn';
+                btn.innerText = 'English'; 
+                document.getElementById('htmlTag').setAttribute('lang', 'bn');
+            } else {
+                currentLang = 'en';
+                btn.innerText = 'বাংলা'; 
+                document.getElementById('htmlTag').setAttribute('lang', 'en');
+            }
+
+            elements.forEach(el => {
+                if (currentLang === 'bn') {
+                    el.innerText = el.getAttribute('data-bn');
+                } else {
+                    el.innerText = el.getAttribute('data-en');
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
