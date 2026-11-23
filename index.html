@@ -4,245 +4,581 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nayan Matchmaking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #FFF0F5; 
-            font-family: Arial, sans-serif;
-            color: #333333;
-            margin: 0;
-            padding: 20px;
+        :root {
+            --primary-green: #0d5c2b;
+            --dark-green: #08421e;
+            --light-green-bg: #eef7f0;
+            --mint-card: #f6fbf7;
+            --accent-gold: #d4af37;
+            --border-green: #c3e0cb;
+            --text-dark: #1f2d24;
+            --text-muted: #556b5d;
         }
 
-        /* ভাষা পরিবর্তনের বাটন স্টাইল */
-        .lang-switch-container {
-            text-align: right;
-            max-width: 1200px;
-            margin: 0 auto 15px auto;
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e6f4ea 0%, #f4faf6 50%, #e0f2e5 100%);
+            font-family: 'Hind Siliguri', Arial, sans-serif;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* টপ নেভিগেশন বার */
+        .top-navbar {
+            background-color: #ffffff;
+            padding: 12px 30px;
+            box-shadow: 0 3px 12px rgba(13, 92, 43, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--border-green);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-green), #1d8348);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        }
+
+        .brand-text h1 {
+            margin: 0;
+            font-size: 22px;
+            color: var(--primary-green);
+            line-height: 1.2;
+        }
+
+        .brand-text span {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: block;
         }
 
         .lang-btn {
-            background-color: #D4AF37;
+            background-color: var(--primary-green);
             color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            font-weight: bold;
+            border: 2px solid var(--accent-gold);
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.3s;
+            box-shadow: 0 2px 6px rgba(13, 92, 43, 0.2);
         }
 
         .lang-btn:hover {
-            background-color: #C59B27;
+            background-color: var(--dark-green);
+            transform: translateY(-1px);
         }
 
-        h1 {
+        /* হিরো ব্যানার (ছবির প্রোফাইল ব্যানারের আদলে) */
+        .hero-banner {
+            max-width: 1280px;
+            width: calc(100% - 40px);
+            margin: 22px auto 0 auto;
+            background: linear-gradient(120deg, #0b5326 0%, #197a3e 60%, #279651 100%);
+            border-radius: 18px;
+            padding: 25px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(13, 92, 43, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::after {
+            content: "🌿";
+            position: absolute;
+            right: 20px;
+            bottom: -10px;
+            font-size: 85px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .hero-content h2 {
+            margin: 0 0 6px 0;
+            font-size: 26px;
+            color: #ffffff;
+        }
+
+        .hero-content p {
+            margin: 0;
+            font-size: 15px;
+            color: #e2f5e9;
+            font-style: italic;
+        }
+
+        .verified-badge {
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--primary-green);
+            padding: 12px 18px;
+            border-radius: 14px;
             text-align: center;
-            color: #8B008B; 
-            font-size: 36px;
-            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-green);
         }
 
+        .verified-badge span {
+            display: block;
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        /* মূল ৩-কলাম ড্যাশবোর্ড গ্রিড */
         .container {
             display: flex;
             justify-content: space-between;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            align-items: flex-start;
+            gap: 22px;
+            max-width: 1280px;
+            width: 100%;
+            margin: 22px auto 40px auto;
+            padding: 0 20px;
+            flex: 1;
         }
 
+        /* বাম ও ডান পাশের হাদিস কার্ড */
         .hadith-sidebar {
-            width: 22%;
-            background-color: #ffffff;
-            border: 4px double #D4AF37; 
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            height: fit-content;
-            box-sizing: border-box;
+            width: 24%;
+            background: linear-gradient(180deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: #ffffff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 6px 18px rgba(13, 92, 43, 0.16);
+            position: sticky;
+            top: 85px;
         }
 
         .hadith-sidebar h3 {
-            color: #D4AF37; 
+            background-color: rgba(255, 255, 255, 0.14);
+            color: #ffd966;
             text-align: center;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 17px;
             margin-top: 0;
+            margin-bottom: 16px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
         }
 
         .arabic-text {
-            font-size: 20px;
-            line-height: 1.8;
-            color: #2c3e50;
+            font-size: 21px;
+            line-height: 1.9;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.18);
+            padding: 12px;
+            border-radius: 12px;
             text-align: right;
             direction: rtl;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
+            border-right: 3px solid var(--accent-gold);
         }
 
-        .form-container {
-            width: 50%;
-            background-color: #ffffff;
-            padding: 30px;
-            border: 4px double #D4AF37; 
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            box-sizing: border-box;
+        .hadith-meaning {
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: #e8f5ec;
+            margin: 0;
         }
 
-        .form-container h2 {
+        .hadith-meaning strong {
+            color: #ffd966;
+        }
+
+        .sidebar-quote {
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.18);
             text-align: center;
-            color: #c71585;
-            margin-top: 0;
-            margin-bottom: 25px;
+            font-size: 14px;
+            color: #c8ebd3;
+        }
+
+        /* মাঝখানের মূল বায়োডাটা ফর্ম কার্ড */
+        .form-container {
+            width: 52%;
+            background-color: #ffffff;
+            padding: 28px;
+            border-radius: 18px;
+            border: 1px solid var(--border-green);
+            box-shadow: 0 8px 24px rgba(13, 92, 43, 0.08);
+        }
+
+        /* সেকশন পিল হেডার (ছবির "ব্যক্তিগত তথ্য", "পারিবারিক তথ্য" স্টাইল) */
+        .section-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--primary-green);
+            color: #ffffff;
+            padding: 7px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px 0 18px 0;
+            box-shadow: 0 3px 8px rgba(13, 92, 43, 0.18);
+        }
+
+        .form-section-box {
+            background-color: var(--mint-card);
+            border: 1px solid #dceee1;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 22px;
+        }
+
+        /* ২-কলাম ইনপুট গ্রিড */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 5px;
         }
 
         input[type="text"],
         input[type="number"],
         textarea {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ffccd5;
-            border-radius: 6px;
-            box-sizing: border-box;
-            background-color: #fffafb;
+            padding: 10px 12px;
+            border: 1px solid #b8dec3;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14.5px;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(13, 92, 43, 0.12);
+        }
+
+        /* রেডিও বাটন স্টাইল */
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #ffffff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #b8dec3;
+            margin-bottom: 14px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            margin: 0;
+            color: var(--text-dark);
+        }
+
+        .radio-option input[type="radio"] {
+            accent-color: var(--primary-green);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
         }
 
         button[type="submit"] {
             width: 100%;
-            padding: 12px;
-            background-color: #D4AF37; 
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary-green), #177a3c);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
-            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(13, 92, 43, 0.25);
         }
 
         button[type="submit"]:hover {
-            background-color: #C59B27; 
+            background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+            transform: translateY(-2px);
         }
 
-        /* মোবাইল বা ছোট স্ক্রিনের জন্য রেসপনসিভ ডিজাইন */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
+        /* ফুটার বার (ছবির নিচের সবুজ বারের মতো) */
+        .footer-bar {
+            background-color: var(--dark-green);
+            color: #e2f5e9;
+            padding: 14px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        .footer-center {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* মোবাইল ও ট্যাবলেট রেসপনসিভ */
+        @media (max-width: 960px) {
             .container {
-                flex-direction: column; /* ফোন স্ক্রিনে কলামগুলো নিচে নিচে চলে আসবে */
-                gap: 15px;
+                flex-direction: column;
             }
             .hadith-sidebar, .form-container {
-                width: 100%; /* প্রতিটি সেকশন পুরো স্ক্রিন জুড়ে থাকবে */
+                width: 100%;
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .top-navbar {
+                padding: 10px 15px;
+            }
+            .hero-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 14px;
+                padding: 20px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-container {
+                padding: 18px;
+            }
+            .footer-bar {
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ভাষা পরিবর্তনের বাটন (ডিফল্টভাবে English থাকবে) -->
-    <div class="lang-switch-container">
-        <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">বাংলা</button>
-    </div>
-
-    <h1 data-en="Nayan Matchmaking 🤵👰" data-bn="নয়ন ম্যাচমেকিং 🤵👰">Nayan Matchmaking 🤵👰</h1>
-
-    <div class="container">
-        
-        <!-- বাম পাশের হাদিস -->
-        <div class="hadith-sidebar">
-            <h3 data-en="Hadith on Marriage" data-bn="বিয়ে সম্পর্কিত হাদিস">Hadith on Marriage</h3>
-            <p class="arabic-text">النِّكَاحُ مِنْ سُنَّتِي فَمَنْ لَمْ يَعْمَلْ بِسُنَّتِي فَلَيْسَ مِنِّي</p>
-            <p><strong data-en="English/Arabic Context:" data-bn="বাংলা:">Bangla:</strong> <span data-en='"Marriage is my tradition. Whoever does not act according to my tradition is not from me." (Ibn Majah)' data-bn='"বিয়ে আমার সুন্নত। অতএব যে আমার সুন্নত অনুযায়ী আমল করে না, সে আমার দলভুক্ত নয়।" (ইবনে মাজাহ)'>"Marriage is my tradition. Whoever does not act according to my tradition is not from me." (Ibn Majah)</span></p>
+    <!-- টপ নেভিগেশন বার -->
+    <header class="top-navbar">
+        <div class="brand-logo">
+            <div class="brand-icon">💚</div>
+            <div class="brand-text">
+                <h1 data-en="Nayan Matchmaking" data-bn="নয়ন ম্যাচমেকিং">Nayan Matchmaking</h1>
+                <span data-en="Find Your Life Partner" data-bn="জীবনের সঙ্গী খুঁজে নিন">Find Your Life Partner</span>
+            </div>
         </div>
 
-        <!-- মাঝখানের মূল বায়োডাটা ফর্ম -->
-        <div class="form-container">
-            <h2 data-en="Candidate Biodata Form" data-bn="পাত্র/পাত্রীর বায়োডাটা ফর্ম">Candidate Biodata Form</h2>
-            
+        <button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">বাংলা</button>
+    </header>
+
+    <!-- প্রোফাইল ব্যানার হেডার -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h2 data-en="Candidate Biodata Form 🤵👰" data-bn="পাত্র/পাত্রীর বায়োডাটা ফর্ম 🤵👰">Candidate Biodata Form 🤵👰</h2>
+            <p data-en='"Looking for a good person, for a beautiful life."' data-bn='"ভালো মানুষ খুঁজছি, সুন্দর জীবনের জন্য।"'>"Looking for a good person, for a beautiful life."</p>
+        </div>
+        <div class="verified-badge">
+            <span>🛡️</span>
+            <div data-en="100% Privacy Protected" data-bn="তথ্য সুরক্ষিত">100% Privacy Protected</div>
+        </div>
+    </section>
+
+    <!-- মূল ড্যাশবোর্ড কন্টেইনার -->
+    <div class="container">
+        
+        <!-- বাম পাশের হাদিস কার্ড -->
+        <aside class="hadith-sidebar">
+            <h3 data-en="🕌 Hadith on Marriage" data-bn="🕌 বিয়ে সম্পর্কিত হাদিস">🕌 Hadith on Marriage</h3>
+            <p class="arabic-text">النِّكَاحُ مِنْ سُنَّتِي فَمَنْ لَمْ يَعْمَلْ بِسُنَّتِي فَلَيْسَ مِنِّي</p>
+            <p class="hadith-meaning">
+                <strong data-en="Meaning: " data-bn="অর্থ: ">Meaning: </strong>
+                <span data-en='"Marriage is my tradition. Whoever does not act according to my tradition is not from me." (Ibn Majah)' data-bn='"বিয়ে আমার সুন্নত। অতএব যে আমার সুন্নত অনুযায়ী আমল করে না, সে আমার দলভুক্ত নয়।" (ইবনে মাজাহ)'>"Marriage is my tradition. Whoever does not act according to my tradition is not from me." (Ibn Majah)</span>
+            </p>
+            <div class="sidebar-quote" data-en="Be a companion of a beautiful life ❤️" data-bn="সুন্দর জীবনের সঙ্গী হোন ❤️">Be a companion of a beautiful life ❤️</div>
+        </aside>
+
+        <!-- মাঝখানের মূল বায়োডাটা ফর্ম -->
+        <main class="form-container">
             <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
                 
                 <input type="hidden" name="access_key" value="1375defc-00a8-4fe8-b4f9-93cc27aa918f">
                 
                 <!-- ১. ব্যক্তিগত তথ্য -->
-                <h3 data-en="Personal Information" data-bn="ব্যক্তিগত তথ্য">Personal Information</h3>
-                
-                <label for="name" data-en="Full Name:" data-bn="নাম:">Full Name:</label>
-                <input type="text" id="name" name="name" required>
+                <div class="section-pill" data-en="👤 Personal Information" data-bn="👤 ব্যক্তিগত তথ্য">👤 Personal Information</div>
+                <div class="form-section-box">
+                    <div class="form-grid">
+                        <div class="field-group full-width">
+                            <label for="name" data-en="Full Name:" data-bn="পুরো নাম:">Full Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
 
-                <label for="profession" data-en="Profession:" data-bn="পেশা:">Profession:</label>
-                <input type="text" id="profession" name="profession" required>
+                        <div class="field-group">
+                            <label for="profession" data-en="Profession:" data-bn="পেশা:">Profession:</label>
+                            <input type="text" id="profession" name="profession" required>
+                        </div>
 
-                <label for="income" data-en="Monthly Income (BDT):" data-bn="মাসিক আয় (টাকা):">Monthly Income (BDT):</label>
-                <input type="number" id="income" name="income" min="0">
+                        <div class="field-group">
+                            <label for="income" data-en="Monthly Income (BDT):" data-bn="মাসিক আয় (টাকা):">Monthly Income (BDT):</label>
+                            <input type="number" id="income" name="income" min="0">
+                        </div>
 
-                <label for="education" data-en="Educational Qualification:" data-bn="শিক্ষাগত যোগ্যতা:">Educational Qualification:</label>
-                <input type="text" id="education" name="education" required>
+                        <div class="field-group">
+                            <label for="education" data-en="Educational Qualification:" data-bn="শিক্ষাগত যোগ্যতা:">Educational Qualification:</label>
+                            <input type="text" id="education" name="education" required>
+                        </div>
 
-                <label for="religion" data-en="Religion:" data-bn="ধর্ম:">Religion:</label>
-                <input type="text" id="religion" name="religion" required>
+                        <div class="field-group">
+                            <label for="religion" data-en="Religion:" data-bn="ধর্ম:">Religion:</label>
+                            <input type="text" id="religion" name="religion" required>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- ২. ঠিকানা ও পারিবারিক তথ্য -->
-                <h3 data-en="Family & Contact Information" data-bn="পারিবারিক ও যোগাযোগের তথ্য">Family & Contact Information</h3>
-                
-                <label for="father_name" data-en="Father's Name:" data-bn="পিতার নাম:">Father's Name:</label>
-                <input type="text" id="father_name" name="father_name" required>
+                <div class="section-pill" data-en="🏠 Family & Contact Information" data-bn="🏠 পারিবারিক ও যোগাযোগের তথ্য">🏠 Family & Contact Information</div>
+                <div class="form-section-box">
+                    <div class="form-grid">
+                        <div class="field-group">
+                            <label for="father_name" data-en="Father's Name:" data-bn="পিতার নাম:">Father's Name:</label>
+                            <input type="text" id="father_name" name="father_name" required>
+                        </div>
 
-                <label for="brothers" data-en="Number of Brothers:" data-bn="ভাইয়ের সংখ্যা:">Number of Brothers:</label>
-                <input type="number" id="brothers" name="brothers" min="0" required>
+                        <div class="field-group">
+                            <label for="sibling_position" data-en="Position among siblings (e.g., Eldest/Youngest):" data-bn="ভাই-বোনদের মধ্যে অবস্থান (যেমন: বড়/ছোট):">Position among siblings (e.g., Eldest/Youngest):</label>
+                            <input type="text" id="sibling_position" name="sibling_position" required>
+                        </div>
 
-                <label for="married_brothers" data-en="How many brothers are married?:" data-bn="কতজন ভাই বিবাহিত?:">How many brothers are married?:</label>
-                <input type="number" id="married_brothers" name="married_brothers" min="0" required>
+                        <div class="field-group">
+                            <label for="brothers" data-en="Number of Brothers:" data-bn="ভাইয়ের সংখ্যা:">Number of Brothers:</label>
+                            <input type="number" id="brothers" name="brothers" min="0" required>
+                        </div>
 
-                <label for="sisters" data-en="Number of Sisters:" data-bn="বোনের সংখ্যা:">Number of Sisters:</label>
-                <input type="number" id="sisters" name="sisters" min="0" required>
+                        <div class="field-group">
+                            <label for="married_brothers" data-en="How many brothers are married?:" data-bn="কতজন ভাই বিবাহিত?:">How many brothers are married?:</label>
+                            <input type="number" id="married_brothers" name="married_brothers" min="0" required>
+                        </div>
 
-                <label for="married_sisters" data-en="How many sisters are married?:" data-bn="কতজন বোন বিবাহিত?:">How many sisters are married?:</label>
-                <input type="number" id="married_sisters" name="married_sisters" min="0" required>
+                        <div class="field-group">
+                            <label for="sisters" data-en="Number of Sisters:" data-bn="বোনের সংখ্যা:">Number of Sisters:</label>
+                            <input type="number" id="sisters" name="sisters" min="0" required>
+                        </div>
 
-                <label for="sibling_position" data-en="Position among siblings (e.g., Eldest/Youngest):" data-bn="ভাই-বোনদের মধ্যে অবস্থান (যেমন: বড়/ছোট):">Position among siblings (e.g., Eldest/Youngest):</label>
-                <input type="text" id="sibling_position" name="sibling_position" required>
+                        <div class="field-group">
+                            <label for="married_sisters" data-en="How many sisters are married?:" data-bn="কতজন বোন বিবাহিত?:">How many sisters are married?:</label>
+                            <input type="number" id="married_sisters" name="married_sisters" min="0" required>
+                        </div>
 
-                <label for="present_address" data-en="Present Address:" data-bn="বর্তমান ঠিকানা:">Present Address:</label>
-                <textarea id="present_address" name="present_address" rows="3" required></textarea>
+                        <div class="field-group full-width">
+                            <label for="present_address" data-en="Present Address:" data-bn="বর্তমান ঠিকানা:">Present Address:</label>
+                            <textarea id="present_address" name="present_address" rows="2" required></textarea>
+                        </div>
 
-                <label for="permanent_address" data-en="Permanent Address:" data-bn="স্থায়ী ঠিকানা:">Permanent Address:</label>
-                <textarea id="permanent_address" name="permanent_address" rows="3" required></textarea>
+                        <div class="field-group full-width">
+                            <label for="permanent_address" data-en="Permanent Address:" data-bn="স্থায়ী ঠিকানা:">Permanent Address:</label>
+                            <textarea id="permanent_address" name="permanent_address" rows="2" required></textarea>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- ৩. অন্যান্য তথ্য -->
-                <h3 data-en="Other Information" data-bn="অন্যান্য তথ্য">Other Information</h3>
-                
-                <p data-en="Previous Marital History?" data-bn="আগে বিবাহ করেছিলেন কি?">Previous Marital History?</p>
-                <input type="radio" id="yes" name="married" value="yes">
-                <label for="yes" data-en="Yes" data-bn="হ্যাঁ">Yes</label>
-                <input type="radio" id="no" name="married" value="no" checked>
-                <label for="no" data-en="No" data-bn="না">No</label>
-                <br><br>
+                <div class="section-pill" data-en="📝 Other Information" data-bn="📝 অন্যান্য তথ্য">📝 Other Information</div>
+                <div class="form-section-box">
+                    <label data-en="Previous Marital History?" data-bn="আগে বিবাহ করেছিলেন কি?">Previous Marital History?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" for="yes">
+                            <input type="radio" id="yes" name="married" value="yes">
+                            <span data-en="Yes" data-bn="হ্যাঁ">Yes</span>
+                        </label>
+                        <label class="radio-option" for="no">
+                            <input type="radio" id="no" name="married" value="no" checked>
+                            <span data-en="No" data-bn="না">No</span>
+                        </label>
+                    </div>
 
-                <label for="reason" data-en="If previously married, reason for divorce (Optional):" data-bn="বিবাহিত হয়ে থাকলে, তালাকের কারণ (ঐচ্ছিক):">If previously married, reason for divorce (Optional):</label>
-                <textarea id="reason" name="reason" rows="3"></textarea>
+                    <div class="field-group" style="margin-bottom: 14px;">
+                        <label for="reason" data-en="If previously married, reason for divorce (Optional):" data-bn="বিবাহিত হয়ে থাকলে, তালাকের কারণ (ঐচ্ছিক):">If previously married, reason for divorce (Optional):</label>
+                        <textarea id="reason" name="reason" rows="2"></textarea>
+                    </div>
 
-                <label for="bad_habits" data-en="Any bad habits? (e.g., Smoking - mention if any):" data-bn="আপনার কোনো খারাপ অভ্যাস আছে কি? (যেমন: ধূমপান ইত্যাদি - থাকলে উল্লেখ করুন):">Any bad habits? (e.g., Smoking - mention if any):</label>
-                <textarea id="bad_habits" name="bad_habits" rows="2" placeholder="If none, type 'None'"></textarea>
+                    <div class="field-group" style="margin-bottom: 14px;">
+                        <label for="bad_habits" data-en="Any bad habits? (e.g., Smoking - mention if any):" data-bn="আপনার কোনো খারাপ অভ্যাস আছে কি? (যেমন: ধূমপান ইত্যাদি - থাকলে উল্লেখ করুন):">Any bad habits? (e.g., Smoking - mention if any):</label>
+                        <textarea id="bad_habits" name="bad_habits" rows="2" placeholder="If none, type 'None'"></textarea>
+                    </div>
 
-                <label for="life_perspective" data-en="Your perspective on life and how you want to lead it:" data-bn="জীবনের প্রতি আপনার দৃষ্টিভঙ্গি কেমন এবং জীবনকে কীভাবে পরিচালনা করতে চান?:">Your perspective on life and how you want to lead it:</label>
-                <textarea id="life_perspective" name="life_perspective" rows="5" required></textarea>
+                    <div class="field-group">
+                        <label for="life_perspective" data-en="Your perspective on life and how you want to lead it:" data-bn="জীবনের প্রতি আপনার দৃষ্টিভঙ্গি কেমন এবং জীবনকে কীভাবে পরিচালনা করতে চান?:">Your perspective on life and how you want to lead it:</label>
+                        <textarea id="life_perspective" name="life_perspective" rows="4" required></textarea>
+                    </div>
+                </div>
 
-                <button type="submit" data-en="Submit Biodata" data-bn="বায়োডাটা জমা দিন">Submit Biodata</button>
+                <button type="submit" data-en="✅ Submit Biodata" data-bn="✅ বায়োডাটা জমা দিন">✅ Submit Biodata</button>
             </form>
-        </div>
+        </main>
 
-        <!-- ডান পাশের হাদিস -->
-        <div class="hadith-sidebar">
-            <h3 data-en="Importance of Family Life" data-bn="পারিবারিক জীবনের গুরুত্ব">Importance of Family Life</h3>
+        <!-- ডান পাশের হাদিস কার্ড -->
+        <aside class="hadith-sidebar">
+            <h3 data-en="🌿 Importance of Family Life" data-bn="🌿 পারিবারিক জীবনের গুরুত্ব">🌿 Importance of Family Life</h3>
             <p class="arabic-text">إِذَا تَزَوَّجَ الْعَبْدُ فَقَدِ اسْتَكْمَلَ نِصْفَ الدِّينِ</p>
-            <p><strong data-en="English/Arabic Context:" data-bn="বাংলা:">Bangla:</strong> <span data-en='"When a servant marries, he has completed half of his religion." (Bayhaqi)' data-bn='"বান্দা যখন বিয়ে করে, তখন সে তার অর্ধেক দ্বীন পূর্ণ করে।" (বায়হাকী)'>"When a servant marries, he has completed half of his religion." (Bayhaqi)</span></p>
-        </div>
+            <p class="hadith-meaning">
+                <strong data-en="Meaning: " data-bn="অর্থ: ">Meaning: </strong>
+                <span data-en='"When a servant marries, he has completed half of his religion." (Bayhaqi)' data-bn='"বান্দা যখন বিয়ে করে, তখন সে তার অর্ধেক দ্বীন পূর্ণ করে।" (বায়হাকী)'>"When a servant marries, he has completed half of his religion." (Bayhaqi)</span>
+            </p>
+            <div class="sidebar-quote" data-en="Building families with values & respect 💚" data-bn="মূল্যবোধ ও সম্মানের সাথে সুন্দর পরিবার 💚">Building families with values & respect 💚</div>
+        </aside>
 
     </div>
+
+    <!-- ফুটার বার -->
+    <footer class="footer-bar">
+        <div data-en="© 2026 Nayan Matchmaking. All rights reserved." data-bn="© ২০২৬ নয়ন ম্যাচমেকিং। সর্বস্বত্ব সংরক্ষিত।">© 2026 Nayan Matchmaking. All rights reserved.</div>
+        <div class="footer-center" data-en="Making life more beautiful together ❤️" data-bn="একসাথে জীবনকে আরও সুন্দর করি ❤️">Making life more beautiful together ❤️</div>
+    </footer>
 
     <!-- ভাষা পরিবর্তন করার জাভাস্ক্রিপ্ট কোড -->
     <script>
